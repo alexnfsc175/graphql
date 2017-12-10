@@ -1,0 +1,29 @@
+{
+  "name": "study-graphql",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev":"nodemon src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexnfsc175/study-graphql.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alexnfsc175/study-graphql/issues"
+  },
+  "homepage": "https://github.com/alexnfsc175/study-graphql#readme",
+  "dependencies": {
+    "express": "^4.16.2",
+    "express-graphql": "^0.6.11",
+    "graphql": "^0.11.7",
+    "jsdom": "^11.5.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.12.5"
+  }
+}
