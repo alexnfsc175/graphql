@@ -3,6 +3,8 @@ const express = require("express");
 // Importa do graphqlHTTP que cria um servidor preparado pro GraphQL + HTTP
 const graphqlHTTP = require("express-graphql");
 
+const schema = require("../schemas/Character");
+
 // Exporta função
 module.exports = () => {
     const app = express();
