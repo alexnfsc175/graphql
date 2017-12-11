@@ -9,6 +9,11 @@ const schema = require("../schemas/Character");
 module.exports = () => {
     const app = express();
 
+//   app.use((req, res, next) => {
+//     console.log(req)  
+//     next();
+//   })
+
   //Resolve questões de cross-domain
   app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*')
@@ -22,6 +27,7 @@ module.exports = () => {
   app.use(
       '/player', 
       graphqlHTTP({
+          formatError: error => ({message: error.message}),
           schema,
           graphiql: true,
       })// Reapassando a instancia da função graphqlHTTP

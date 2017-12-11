@@ -1,31 +1,44 @@
 const {
-    getDomFromURL,
-    getTextContent
+    getDomFromURL
 } = require('../utils/dom.utils')
 const {
     hasSpecifiLength
 } = require('../utils/validations.utils');
 
+const Character = require('../models/Character');
 
-const getCharacterInfos = async(playerName = '') => {
-    if (hasSpecifiLength({
+
+const getCharacterInfos = (playerName = '') => 
+
+    new Promise(async(resolve, reject) => {
+        const playerNameWasNotSent = hasSpecifiLength({
             target: playerName,
             length: 0
-        })) throw new Error('Player name is required');
+        });
 
-    const url = `https://secure.tibia.com/community/?subtopic=characters&name=${playerName}`;
+        if (playerNameWasNotSent) {
+            reject(new Error('Player name is required'))
+        }
 
-    const dom = await getDomFromURL(url);
+        try {
+            const url = `https://secure.tibia.com/community/?subtopic=characters&name=${playerName}`;
 
-    // Cria variavel com o seletor
-    const playerNameSelector = `#characters > div.Border_2 > div > div > table:nth-child(1) > tbody > tr:nth-child(2) > td:nth-child(2)`;
-    const playerNameFromDOM = getTextContent(dom, playerNameSelector);
-    console.log(playerNameFromDOM);
-}
+            const dom = await getDomFromURL(url);
 
-getCharacterInfos('hue proliferator')
-getCharacterInfos('mad dentist')
+            const character = new Character(dom);
 
+            if(character.playerDoesntExists()){
+                reject(new Error(`Player doesn't exists`))
+            }
+
+            resolve(character.allCharacterInformation);
+
+            return character.allCharacterInformation;
+        } catch (error) {
+            reject(error);
+        }
+    })
+    
 
 module.exports = {
     getCharacterInfos

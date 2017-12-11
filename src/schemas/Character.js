@@ -4,6 +4,10 @@ const {
     GraphQLString
 } = require("graphql");
 
+const {
+    getCharacterInfos
+} = require("../services/character.service");
+
 const CharacterType = new GraphQLObjectType({
     name: 'character',
     fields: () => ({
@@ -52,7 +56,7 @@ const CharacterType = new GraphQLObjectType({
 module.exports = new GraphQLSchema({
     query: new GraphQLObjectType({
         name: 'player',
-        description: 'Descrição',
+        description: "This is my schema which will inform all player's informations",
         fields: () => ({
             player: {
                 type: CharacterType,
@@ -61,18 +65,8 @@ module.exports = new GraphQLSchema({
                         type: GraphQLString,
                     }
                 },
-                resolve: (root, args) => ({
-                    name: 'Hue Proliferator',
-                    sex: 'male',
-                    vocation: 'Elder Druid',
-                    level: '123',
-                    achievementPoints: '62',
-                    world: 'Guardia',
-                    residence: 'Thais',
-                    lastLogin: 'Feb 19 2017, 01:03:29 CET',
-                    accountStatus: 'Free Account',
-                })
-            }
-        })
-    })
+                resolve: (root, args) => getCharacterInfos(args.nickname),
+            },
+        }),
+    }),
 });
